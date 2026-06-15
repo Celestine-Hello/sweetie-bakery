@@ -1,0 +1,82 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1558312657-28187a1e9205?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') center/cover no-repeat;
+    height: 100vh;
+    min-height: 600px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.btn-primary {
+    background-color: #d4a373;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 30px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #c5895a;
+}
+
+.card-product {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+}
+
+.card-product:hover {
+    transform: translateY(-10px);
+}
+
+.card-product img {
+    height: 280px;
+    object-fit: cover;
+}
+
+.section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 3rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #d4a373;
+}
+
+.bg-light-cream {
+    background-color: #fff8f3;
+}
+
+footer {
+    background-color: #2d2d2d;
+    color: #ddd;
+}
