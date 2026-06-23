@@ -119,6 +119,18 @@
         }
         .btn-whatsapp i { margin-right: 8px; }
         .btn-add-cart { background-color: #d4a373; border: none; border-radius: 50px; padding: 14px 40px; }
+        .btn-3d-preview {
+            border: 2px solid #d4a373;
+            color: #9f6b3f;
+            border-radius: 50px;
+            padding: 14px 32px;
+            font-weight: 600;
+            background: #fffaf5;
+        }
+        .btn-3d-preview:hover {
+            background: #d4a373;
+            color: #fff;
+        }
         .info-box {
             background: white; border-radius: 15px; padding: 1.5rem;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
@@ -267,6 +279,11 @@
                     </a>
                     <a href="/keranjang" class="btn btn-add-cart btn-lg">
                         <i class="fas fa-shopping-bag me-2"></i>Tambah ke Keranjang
+                    </a>
+                </div>
+                <div class="d-grid mt-3">
+                    <a href="/produk/1/preview-3d" class="btn btn-3d-preview btn-lg">
+                        <i class="fas fa-cube me-2"></i>3D Interactive Preview
                     </a>
                 </div>
 

@@ -62,6 +62,20 @@ Route::get('/produk/{id}', function ($id) {
     return view("produk");
 });
 
+Route::get('/produk/{id}/preview-3d', function ($id) {
+    if (!$id) {
+        return redirect('home');
+    }
+
+    return view("preview-3d");
+});
+
+Route::get('/models/blood_red_velvet_cake.glb', function () {
+    return response()->file(base_path('blood_red_velvet_cake.glb'), [
+        'Content-Type' => 'model/gltf-binary',
+    ]);
+});
+
 Route::get('/keranjang', function() {
     return view("keranjang");
 });
