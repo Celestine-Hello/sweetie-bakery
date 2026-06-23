@@ -149,5 +149,6 @@
         .bindPopup('<strong>Sweetie Bakery</strong><br>Sedang membuat pesanan Anda dengan penuh cinta')
         .openPopup();
 </script>
+@include('partials.music-player')
 </body>
 </html>

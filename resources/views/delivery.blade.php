@@ -170,5 +170,6 @@
         }
     }, 3000);
 </script>
+@include('partials.music-player')
 </body>
 </html>

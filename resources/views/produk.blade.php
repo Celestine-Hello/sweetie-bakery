@@ -362,5 +362,6 @@
         playOverlay.style.display   = 'flex';
     });
 </script>
+@include('partials.music-player')
 </body>
 </html>

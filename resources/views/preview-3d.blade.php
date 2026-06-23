@@ -192,5 +192,6 @@
         loadingText.textContent = 'Model belum bisa dimuat. Coba refresh halaman.';
     });
 </script>
+@include('partials.music-player')
 </body>
 </html>
