@@ -2,7 +2,7 @@
     .sweetie-music-player {
         position: fixed;
         right: 18px;
-        bottom: 18px;
+        top: 82px;
         z-index: 1080;
         display: flex;
         align-items: center;
@@ -13,6 +13,13 @@
         border: 1px solid rgba(212, 163, 115, 0.45);
         box-shadow: 0 10px 28px rgba(87, 57, 36, 0.18);
         backdrop-filter: blur(8px);
+        animation: sweetieMusicIn 0.42s ease both;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .sweetie-music-player:hover,
+    .sweetie-music-player:focus-within {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 32px rgba(87, 57, 36, 0.22);
     }
     .sweetie-music-player select {
         width: 156px;
@@ -23,10 +30,16 @@
         background-color: #fff;
         font-size: 0.84rem;
         box-shadow: inset 0 0 0 1px rgba(212, 163, 115, 0.28);
+        transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    }
+    .sweetie-music-player select:hover {
+        transform: scale(1.02);
+        background-color: #fffdfb;
     }
     .sweetie-music-player select:focus {
         outline: none;
         box-shadow: inset 0 0 0 2px rgba(212, 163, 115, 0.72);
+        animation: sweetieSelectPulse 0.36s ease;
     }
     .sweetie-music-toggle {
         width: 38px;
@@ -43,10 +56,13 @@
     .sweetie-music-toggle:hover {
         background: #bd8757;
     }
+    .sweetie-music-player.is-playing .sweetie-music-toggle {
+        animation: sweetieBeat 1.5s ease-in-out infinite;
+    }
     .sweetie-music-status {
         position: absolute;
         right: 12px;
-        bottom: 52px;
+        top: 52px;
         max-width: 220px;
         padding: 7px 10px;
         border-radius: 12px;
@@ -55,7 +71,7 @@
         box-shadow: 0 8px 20px rgba(87, 57, 36, 0.12);
         font-size: 0.75rem;
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(-6px);
         pointer-events: none;
         transition: opacity 0.2s ease, transform 0.2s ease;
     }
@@ -63,10 +79,29 @@
         opacity: 1;
         transform: translateY(0);
     }
+    @keyframes sweetieMusicIn {
+        from {
+            opacity: 0;
+            transform: translateY(-12px) scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    @keyframes sweetieSelectPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.035); }
+        100% { transform: scale(1); }
+    }
+    @keyframes sweetieBeat {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+    }
     @media (max-width: 575px) {
         .sweetie-music-player {
             right: 10px;
-            bottom: 10px;
+            top: 72px;
             left: 10px;
             justify-content: center;
         }
@@ -93,6 +128,7 @@
 <script>
     (function () {
         const audio = document.getElementById('sweetieMusicAudio');
+        const player = document.querySelector('.sweetie-music-player');
         const select = document.getElementById('sweetieMusicSelect');
         const toggle = document.getElementById('sweetieMusicToggle');
         const icon = document.getElementById('sweetieMusicIcon');
@@ -125,6 +161,7 @@
         function updateIcon(isPlaying) {
             icon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
             toggle.setAttribute('aria-label', isPlaying ? 'Jeda musik' : 'Putar musik');
+            player.classList.toggle('is-playing', isPlaying);
         }
 
         function saveProgress() {
