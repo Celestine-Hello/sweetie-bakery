@@ -552,9 +552,15 @@
                     </a>
                 </div>
                 <div class="d-grid mt-3">
+                    @if(!empty($product['has_3d']))
                     <a href="/produk/{{ $product['id'] }}/preview-3d" class="btn btn-3d-preview btn-lg">
                         <i class="fas fa-cube me-2"></i>3D Interactive Preview
                     </a>
+                    @else
+                    <button class="btn btn-3d-preview btn-lg" disabled style="opacity: 0.6; cursor: not-allowed;">
+                        <i class="fas fa-cube me-2"></i>produk ini belum memiliki model 3D
+                    </button>
+                    @endif
                 </div>
 
                 <div class="info-box mt-4">
