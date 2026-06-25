@@ -8,17 +8,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #fdf9f5; color: #444; }
+        :root {
+            --pastel-primary: #d4a373;
+            --pastel-bg: #fdf6f0;
+            --pastel-card: #ffffff;
+            --pastel-text: #5a4a42;
+            --pastel-muted: #8c7b73;
+            --pastel-success: #7fb069;
+            --pastel-danger: #e07a7a;
+        }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--pastel-bg); color: var(--pastel-text); }
         h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; }
-        .navbar-brand { font-weight: 700; font-size: 1.8rem; }
+        .navbar {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(212, 163, 115, 0.1) !important;
+        }
+        .navbar-brand { font-weight: 700; font-size: 1.8rem; color: var(--pastel-text) !important; font-family: 'Playfair Display', serif; }
         .cart-item {
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 30px rgba(212, 163, 115, 0.06);
             transition: all 0.3s;
+            border: 1px solid rgba(212, 163, 115, 0.05);
         }
-        .cart-item:hover { transform: translateY(-5px); }
+        .cart-item:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(212, 163, 115, 0.1); }
         .cart-item img {
             width: 100%;
             height: 140px;
@@ -27,42 +42,81 @@
         .quantity-btn {
             width: 36px;
             height: 36px;
-            border: 1px solid #ddd;
-            background: #f8f9fa;
-            border-radius: 8px;
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            background: #fffaf5;
+            border-radius: 10px;
             font-size: 1.1rem;
+            color: var(--pastel-text);
+            transition: all 0.2s;
+        }
+        .quantity-btn:hover {
+            background: var(--pastel-primary);
+            color: white;
+            border-color: var(--pastel-primary);
         }
         .summary-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(212, 163, 115, 0.08);
             position: sticky;
             top: 100px;
+            border: 1px solid rgba(212, 163, 115, 0.05);
         }
         .price-total {
             font-size: 1.8rem;
-            color: #d4a373;
+            color: var(--pastel-primary);
             font-weight: 700;
         }
         .btn-whatsapp-checkout {
-            background-color: #25d366;
+            background-color: #6dbf8e;
             color: white;
             border-radius: 50px;
             padding: 16px;
             font-size: 1.2rem;
             font-weight: 600;
+            border: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(109, 191, 142, 0.3);
+        }
+        .btn-whatsapp-checkout:hover {
+            background-color: #5aa97a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(109, 191, 142, 0.4);
         }
         .btn-whatsapp-checkout i { margin-right: 10px; }
         .empty-cart {
             text-align: center;
             padding: 5rem 1rem;
-            color: #888;
+            color: var(--pastel-muted);
         }
         .empty-cart img {
             width: 200px;
             opacity: 0.7;
             margin-bottom: 2rem;
+        }
+        .breadcrumb-item a { color: var(--pastel-muted); text-decoration: none; transition: color 0.3s; }
+        .breadcrumb-item a:hover { color: var(--pastel-primary); }
+        .breadcrumb-item.active { color: var(--pastel-primary); }
+        .text-danger { color: var(--pastel-danger) !important; }
+        .btn-outline-dark {
+            border-color: var(--pastel-muted);
+            color: var(--pastel-text);
+            transition: all 0.3s;
+        }
+        .btn-outline-dark:hover {
+            background: var(--pastel-primary);
+            border-color: var(--pastel-primary);
+            color: white;
+        }
+        .form-control {
+            border-radius: 14px;
+            border: 2px solid rgba(212, 163, 115, 0.12);
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: var(--pastel-primary);
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.1);
         }
     </style>
 </head>
@@ -142,7 +196,7 @@
             <div class="cart-item mb-4">
                 <div class="row g-0 align-items-center">
                     <div class="col-4 col-md-3">
-                        <img src="https://images.unsplash.com/photo-1622621733376-551d9246f8ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chocolate Ganache">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" alt="Chocolate Ganache">
                     </div>
                     <div class="col-8 col-md-9">
                         <div class="p-4">

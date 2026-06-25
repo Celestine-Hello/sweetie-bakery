@@ -8,20 +8,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #fdf9f5; color: #444; }
+        :root {
+            --pastel-primary: #d4a373;
+            --pastel-primary-soft: #e8c39e;
+            --pastel-bg: #fdf6f0;
+            --pastel-card: #ffffff;
+            --pastel-text: #5a4a42;
+            --pastel-muted: #8c7b73;
+        }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--pastel-bg); color: var(--pastel-text); }
         h1, h2, h3, h5 { font-family: 'Playfair Display', serif; }
-        .navbar-brand { font-weight: 700; font-size: 1.8rem; }
+        .navbar {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(212, 163, 115, 0.1) !important;
+        }
+        .navbar-brand { font-weight: 700; font-size: 1.8rem; color: var(--pastel-text) !important; font-family: 'Playfair Display', serif; }
 
         .product-card {
             background: white;
-            border-radius: 18px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            box-shadow: 0 8px 30px rgba(212, 163, 115, 0.08);
             transition: all 0.4s ease;
+            border: 1px solid rgba(212, 163, 115, 0.05);
         }
         .product-card:hover {
             transform: translateY(-12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            box-shadow: 0 20px 50px rgba(212, 163, 115, 0.15);
         }
         .product-card img {
             height: 280px;
@@ -33,32 +47,66 @@
         }
         .price {
             font-size: 1.5rem;
-            color: #d4a373;
+            color: #c17a3a;
             font-weight: 700;
+            letter-spacing: -0.5px;
         }
         .badge-popular {
             background: linear-gradient(45deg, #d4a373, #e8c39e);
             color: white;
             font-size: 0.75rem;
-            padding: 5px 12px;
+            padding: 5px 14px;
             border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(212, 163, 115, 0.3);
         }
         .filter-card {
             background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: 0 8px 25px rgba(212, 163, 115, 0.06);
             position: sticky;
             top: 100px;
+            border: 1px solid rgba(212, 163, 115, 0.05);
         }
         .form-control, .form-select {
-            border-radius: 12px;
+            border-radius: 14px;
+            border: 2px solid rgba(212, 163, 115, 0.12);
+            padding: 12px 16px;
+            transition: all 0.3s;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--pastel-primary);
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.1);
         }
         .btn-filter {
-            background-color: #d4a373;
+            background-color: var(--pastel-primary);
             color: white;
             border-radius: 30px;
-            padding: 10px 24px;
+            padding: 12px 28px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(212, 163, 115, 0.3);
+        }
+        .btn-filter:hover {
+            background-color: #c5895a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 163, 115, 0.4);
+        }
+        .breadcrumb-item a { color: var(--pastel-muted); text-decoration: none; transition: color 0.3s; }
+        .breadcrumb-item a:hover { color: var(--pastel-primary); }
+        .breadcrumb-item.active { color: var(--pastel-primary); }
+        .pagination .page-item.active .page-link {
+            background-color: var(--pastel-primary);
+            border-color: var(--pastel-primary);
+            box-shadow: 0 4px 15px rgba(212, 163, 115, 0.3);
+        }
+        .pagination .page-link {
+            color: var(--pastel-primary);
+            border-radius: 12px;
+            margin: 0 4px;
+            border: 1px solid rgba(212, 163, 115, 0.15);
         }
     </style>
 </head>
@@ -145,10 +193,10 @@
             </div>
 
             <div class="row g-4">
-                @foreach ($products as $product)
+                @foreach ($products as $index => $product)
     <div class="col-md-6 col-lg-4">
         <div class="product-card h-100">
-            <a href="{{ url("/produk/1") }}" class="text-decoration-none">
+            <a href="{{ url('/produk/' . ($index + 1)) }}" class="text-decoration-none">
 
                 <img
                     src="{{ $product['gambar'] }}"

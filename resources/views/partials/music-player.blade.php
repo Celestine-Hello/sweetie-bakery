@@ -172,6 +172,37 @@
             });
         }
 
+        function restoreTime(time) {
+            if (time && Number.isFinite(time) && time > 0) {
+                const safeTime = Math.min(time, audio.duration || time);
+                try {
+                    audio.currentTime = safeTime;
+                } catch (e) {
+                    // ignore seek errors
+                }
+            }
+        }
+
+        function setTrack(src, time) {
+            audio.src = src;
+            select.value = src;
+
+            function onReady() {
+                restoreTime(time);
+            }
+
+            // If already loaded (cached), restore immediately
+            if (audio.readyState >= 2) {
+                onReady();
+            } else {
+                // Wait until audio is ready to seek
+                audio.addEventListener('canplay', function onCanPlay() {
+                    audio.removeEventListener('canplay', onCanPlay);
+                    onReady();
+                });
+            }
+        }
+
         function playMusic() {
             audio.play().then(function () {
                 updateIcon(true);
@@ -183,22 +214,26 @@
             });
         }
 
-        function setTrack(src, time) {
-            audio.src = src;
-            select.value = src;
-            audio.addEventListener('loadedmetadata', function restoreTime() {
-                audio.removeEventListener('loadedmetadata', restoreTime);
-                if (time && Number.isFinite(time)) {
-                    audio.currentTime = Math.min(time, audio.duration || time);
-                }
-            });
-        }
-
+        // ── Restore state on every page load ───────────────────────
         const state = getState();
         const initialSrc = state.src || select.options[0].value;
-        setTrack(initialSrc, state.time || 0);
+        select.value = initialSrc;
+        audio.src = initialSrc;
         updateIcon(false);
 
+        // If we have a saved time, restore it when audio is ready
+        if (state.time && state.time > 0) {
+            if (audio.readyState >= 2) {
+                restoreTime(state.time);
+            } else {
+                audio.addEventListener('canplay', function handler() {
+                    audio.removeEventListener('canplay', handler);
+                    restoreTime(state.time);
+                });
+            }
+        }
+
+        // Only auto-play if it was playing before navigation
         if (state.playing) {
             playMusic();
         } else {
@@ -216,10 +251,10 @@
         });
 
         select.addEventListener('change', function () {
-            const shouldPlay = !audio.paused;
+            const wasPlaying = !audio.paused;
             setTrack(select.value, 0);
-            setState({ src: select.value, time: 0, playing: shouldPlay });
-            if (shouldPlay) {
+            setState({ src: select.value, time: 0, playing: wasPlaying });
+            if (wasPlaying) {
                 playMusic();
             }
         });
@@ -234,13 +269,22 @@
             saveProgress();
         });
 
+        // Save every second (more precise than every 3 sec)
         audio.addEventListener('timeupdate', function () {
-            if (Math.floor(audio.currentTime) % 3 === 0) {
-                saveProgress();
+            const now = Math.floor(audio.currentTime);
+            const lastSaved = getState().lastSavedTime || -1;
+            if (now !== lastSaved) {
+                setState({ time: audio.currentTime, lastSavedTime: now });
             }
         });
 
+        // Save before leaving page
         window.addEventListener('pagehide', saveProgress);
         window.addEventListener('beforeunload', saveProgress);
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'hidden') {
+                saveProgress();
+            }
+        });
     })();
 </script>
